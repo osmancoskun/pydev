@@ -1,4 +1,6 @@
 import utils
-devs = utils.get_pci_devices()
+
+devs = utils.get_network_devices()
 for dev in devs:
-    print(dev.vendor)
+    print("dev, mac, vendor")
+    print(dev.device, dev.mac_address, dev.vendor)
