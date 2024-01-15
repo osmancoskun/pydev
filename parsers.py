@@ -18,7 +18,6 @@ def pci_ids():
             continue
         if not line.startswith("\t"):
             vendor_id, vendor_name = line.strip().split(" ", 1)
-            print(type(vendor_id))
             devices[vendor_id] = {
                 "vendor_id": vendor_id,
                 "vendor_name": vendor_name.strip(),
@@ -31,6 +30,5 @@ def pci_ids():
 
             devices[cur_vendor]["devices"][device_id] = device_name.strip()
 
-    # for dev in devices:
-    # print("dev vendor: ", devices[dev]["vendor_id"], devices[dev]["vendor_name"])
+    
     return devices

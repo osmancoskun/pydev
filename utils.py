@@ -1,5 +1,5 @@
 import os
-
+import json
 import classes
 import parsers
 
@@ -13,16 +13,26 @@ network_dev_path = "/sys/class/net"
 parsed_pci_ids = parsers.pci_ids()
 
 
+
 def get_pci_names(vendor: str = None, device: str = None):
-    if not vendor:
-        return None
-    try:
-        result = {"vendor_name": parsed_pci_ids[vendor]["name"]}
-    except KeyError:
-        result = "Vendor not found"
+
     if device:
-        result["device_name"] = parsed_pci_ids[vendor]["devices"][device]["name"]
-    return result
+        try:
+            return classes.BaseDevice(
+                vendor=parsed_pci_ids[vendor]["vendor_name"],
+                device=parsed_pci_ids[vendor]["devices"][device]
+                )
+        except:
+            return classes.BaseDevice(
+                vendor=parsed_pci_ids[vendor]["vendor_name"],
+                device="Device not found"
+            )
+
+
+    try:
+        return classes.BaseDevice(vendor=parsed_pci_ids[vendor]["vendor_name"])
+    except:
+        return classes.BaseDevice(vendor="Vendor not found")
 
 
 def get_pci_devices():
@@ -37,10 +47,7 @@ def get_pci_devices():
                     device_name = f.read().strip()[2:].upper()
 
                 data = get_pci_names(vendor_name, device_name)
-                yield classes.BaseDevice(
-                    vendor=data["vendor_name"],
-                    device=data["device_name"],
-                )
+                yield data
 
 
 def get_network_devices():
@@ -56,14 +63,17 @@ def get_network_devices():
 
                 dp = os.path.join(network_dev_path, dir, "device", "device")
                 if os.path.exists(dp):
-                    device_pci = open(dp).read()[:-2]
+                    device_pci = open(dp).read()[2:].strip()
 
                 vp = os.path.join(network_dev_path, dir, "device", "vendor")
                 if os.path.exists(vp):
-                    vendor_pci = open(vp).read()[:-1]
-
+                    vendor_pci = open(vp).read()[2:].strip()
+                
+                data = get_pci_names(vendor_pci,device_pci)
                 yield classes.NetworkDevice(
                     mac_address=mac_address,
-                    vendor=get_pci_names(vendor=vendor_pci),
-                    device=device_pci,
+                    vendor=data.vendor,
+                    device=data.device
                 )
+
+                
