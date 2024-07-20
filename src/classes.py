@@ -33,3 +33,8 @@ class GPU(BaseDevice):
         self.device_id = device_id
         self.driver = driver
         self.is_secondary_gpu = is_secondary_gpu
+
+
+class Memory:
+    def __init__(self, *args, total_memory, **kwargs):
+        self.total_memory = total_memory
