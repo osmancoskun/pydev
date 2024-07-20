@@ -24,3 +24,12 @@ class Disk(BaseDevice):
         self.firmware_rev = firmware_rev
         self.size = int(size)
         self.size_GB = self.size * 512 / 1024 / 1024 / 1024
+
+
+class GPU(BaseDevice):
+    def __init__(self, *args, vendor_id, device_id, is_secondary_gpu, driver, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.vendor_id = vendor_id
+        self.device_id = device_id
+        self.driver = driver
+        self.is_secondary_gpu = is_secondary_gpu
