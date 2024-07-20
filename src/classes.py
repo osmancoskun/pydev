@@ -15,3 +15,12 @@ class CPU(BaseDevice):
         self.microcode = microcode
         self.core_no = core_no
         self.thread_no = thread_no
+
+
+class Disk(BaseDevice):
+    def __init__(self, *args, serial, firmware_rev, size, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.serial = serial
+        self.firmware_rev = firmware_rev
+        self.size = int(size)
+        self.size_GB = self.size * 512 / 1024 / 1024 / 1024
