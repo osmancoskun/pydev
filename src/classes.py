@@ -44,3 +44,15 @@ class Motherboard(BaseDevice):
     def __init__(self, *args, version, **kwargs):
         super().__init__(*args, **kwargs)
         self.version = version
+
+
+class Network(BaseDevice):
+    def __init__(
+        self, *args, interface, mac_address, device_id, vendor_id, is_wireless, **kwargs
+    ):
+        super().__init__(*args, **kwargs)
+        self.interface = interface
+        self.device_id = device_id
+        self.vendor_id = vendor_id
+        self.mac_address = mac_address
+        self.is_wireless = is_wireless
