@@ -38,3 +38,9 @@ class GPU(BaseDevice):
 class Memory:
     def __init__(self, *args, total_memory, **kwargs):
         self.total_memory = total_memory
+
+
+class Motherboard(BaseDevice):
+    def __init__(self, *args, version, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.version = version
