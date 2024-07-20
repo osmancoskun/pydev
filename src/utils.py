@@ -16,16 +16,33 @@ for pci_id_path in pci_id_paths:
 
 
 def int2hex(num):
+    """
+    Convert an integer to its hexadecimal string representation.
+
+    :param num: The integer to convert.
+    :return: A string representing the hexadecimal value of the integer.
+    """
     return str(hex(num)[2:]).upper()
 
 
 def get_pci_vendor(pci):
+    """
+    Retrieve the PCI vendor information from the pci.ids file.
+
+    :param pci: The PCI vendor ID as a string.
+    :return: The line from the pci.ids file that starts with the provided PCI vendor ID.
+    """
     for line in pci_ids:
         if line.startswith(pci):
             return line
 
 
 def get_pci_devices():
+    """
+    Generator function to retrieve PCI devices information.
+
+    :yield: An instance of the BaseDevice class with vendor and device information.
+    """
     for paths, dirs, files in os.walk(pci_dev_path):
         if dirs:
             for dir in dirs:
@@ -44,6 +61,11 @@ def get_pci_devices():
 
 
 def parse_pci_ids():
+    """
+    Parse the PCI IDs from the pci.ids files and create a dictionary of devices.
+
+    :return: A dictionary where keys are vendor IDs and values are dictionaries with vendor and device information.
+    """
     for p in pci_id_paths:
         if os.path.isfile(p):
             with open(p, "r") as f:
@@ -83,6 +105,13 @@ parsed_pci_ids = parse_pci_ids()
 
 
 def get_device_name(vendor_id, device_id):
+    """
+    Retrieve the device name for a given vendor and device ID.
+
+    :param vendor_id: The vendor ID of the device.
+    :param device_id: The device ID of the device.
+    :return: The name of the device.
+    """
     for dev in parsed_pci_ids[vendor_id]["devices"]:
         if dev["device_id"] == device_id:
             return dev["device_name"]

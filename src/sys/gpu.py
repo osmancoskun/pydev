@@ -9,6 +9,11 @@ pci_id_paths = ["/usr/share/misc/pci.ids", "/usr/share/hwdata/pci.ids"]
 
 
 def get():
+    """
+    Generator function to retrieve GPU information from the /sys/bus/pci/devices directory.
+
+    :yield: An instance of the GPU class populated with information about each GPU.
+    """
     for root, dirs, files in os.walk(pci_dev_path):
         for pci_dir in dirs:
             dev_content_path = os.path.join(root, pci_dir, "class")

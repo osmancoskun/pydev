@@ -6,6 +6,12 @@ if_path = "/sys/class/net"
 
 
 def read(file_path):
+    """
+    Read the content of a file if it exists and return the first line stripped of leading and trailing whitespace.
+
+    :param file_path: The path to the file.
+    :return: The first line of the file, stripped of leading and trailing whitespace, or None if the file does not exist.
+    """
     if os.path.exists(file_path):
         with open(file_path, "r") as f:
             return f.readline().strip().upper()
@@ -14,6 +20,11 @@ def read(file_path):
 
 
 def get():
+    """
+    Generator function to retrieve network interface information from the /sys/class/net directory.
+
+    :yield: An instance of the Network class populated with information about each network interface.
+    """
     for root, dirs, files in os.walk(if_path):
         for interface in dirs:
             if interface != "lo":

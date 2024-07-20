@@ -4,10 +4,21 @@ cpuinfo_path = "/proc/cpuinfo"
 
 
 def line_split(line):
+    """
+    Split a line from /proc/cpuinfo on the tab and colon characters and strip whitespace.
+
+    :param line: The line to split.
+    :return: The part of the line after the tab and colon, stripped of leading and trailing whitespace.
+    """
     return line.split("\t:")[1].strip()
 
 
 def get():
+    """
+    Parse the /proc/cpuinfo file to retrieve CPU information and return an instance of the CPU class.
+
+    :return: An instance of the CPU class populated with information from /proc/cpuinfo.
+    """
     with open(cpuinfo_path, "r") as f:
         file_content = f.readlines()
         model = None
