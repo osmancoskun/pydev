@@ -8,7 +8,7 @@ A small library for accessing system device information without relying on exter
 - [x] Show graphics devices details
 - [ ] List USB devices information
 - [x] Include CPU details
-- [-] Provide memory (RAM) information
+- [ ] Provide memory (RAM) information
 - [x] Show storage devices and details
 - [ ] Display system information (OS, architecture, etc.)
 - [ ] Add error handling and informative messages
